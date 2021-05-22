@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>TH - upload</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style>
+      div.preview-images > img {
+        width: 30%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 mt-3">
+          <h4>Tyler Helm - upload</h4>
+
+          <form class="mt-4"
+            action="/upload"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <div class="form-group">
+              <input id="title" name="title" type="text" placeholder="title" class="form-control-file border" />
+              <br>
+              <div>
+                <input type="radio" name="orientation" id="r1" value="portrait" />
+                <label for="r1">Portrait</label>
+              </div>
+              <div>
+                <input type="radio" name="orientation" id="r2" value="landscape" />
+                <label for="r2">Landscape</label>
+              </div>
+              <input
+                type="file"
+                name="file"
+                id="input-files"
+                class="form-control-file border"
+              />
+              <br>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="preview-images"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        let imagesPreview = function(input, placeToInsertImagePreview) {
+          if (input.files) {
+            let filesAmount = input.files.length;
+            for (i = 0; i < filesAmount; i++) {
+              let reader = new FileReader();
+              reader.onload = function(event) {
+                $($.parseHTML("<img>"))
+                  .attr("src", event.target.result)
+                  .appendTo(placeToInsertImagePreview);
+              };
+              reader.readAsDataURL(input.files[i]);
+            }
+          }
+        };
+        $("#input-files").on("change", function() {
+          imagesPreview(this, "div.preview-images");
+        });
+
+        $("button[type=submit]").attr('disabled','disabled');
+
+        let title = document.getElementById('title');
+        let file = document.getElementById('input-files');
+        let portrait = document.getElementById('r1');
+        let landscape = document.getElementById('r2');
+
+        $("form").change(function() {
+          if(title.value && file.value && (portrait.checked || landscape.checked)){
+            $("button[type=submit]").removeAttr('disabled');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
