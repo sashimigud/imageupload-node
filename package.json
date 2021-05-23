@@ -1,12 +1,12 @@
 {
-  "name": "tylerhelm-imageupload",
+  "name": "node-imageupload",
   "version": "1.0.0",
-  "description": "image-upload for tylerhelm site",
+  "description": "image-upload with node, express, mongoose, GridFSstorage and MongoDB",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "trym helle",
+  "author": "sashimigud",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
