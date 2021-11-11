@@ -5,35 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>TH - upload</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
     <style>
       div.preview-images > img {
         width: 30%;
+      }
+
+      .header-text {
+        margin-top: 10px;
       }
     </style>
   </head>
 
   <body>
     <div class="container">
+      <br />
+      <div class="uploaded-images">
+        <div class="uploaded-image">
+          <img src="" alt="" />
+          <button class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+      <hr />
       <div class="row">
         <div class="col-sm-8 mt-3">
           <h4>Tyler Helm - upload</h4>
 
-          <form class="mt-4"
+          <form
+            class="mt-4"
             action="/upload"
             method="POST"
             enctype="multipart/form-data"
           >
             <div class="form-group">
-              <input id="title" name="title" type="text" placeholder="title" class="form-control-file border" />
-              <br>
+              <input
+                id="title"
+                name="title"
+                type="text"
+                placeholder="title"
+                class="form-control-file border"
+              />
+              <br />
+              <h4 class="header-text">Orientation</h4>
               <div>
-                <input type="radio" name="orientation" id="r1" value="portrait" />
+                <input
+                  type="radio"
+                  name="orientation"
+                  id="r1"
+                  value="portrait"
+                />
                 <label for="r1">Portrait</label>
               </div>
               <div>
-                <input type="radio" name="orientation" id="r2" value="landscape" />
+                <input
+                  type="radio"
+                  name="orientation"
+                  id="r2"
+                  value="landscape"
+                />
                 <label for="r2">Landscape</label>
+              </div>
+              <h4 class="header-text">is Red-tape image</h4>
+              <div>
+                <input type="radio" name="isRedTape" id="red1" value="yes" />
+                <label for="r1">Yes</label>
+              </div>
+              <div>
+                <input type="radio" name="isRedTape" id="red2" value="no" />
+                <label for="r2">No</label>
               </div>
               <input
                 type="file"
@@ -41,7 +83,7 @@
                 id="input-files"
                 class="form-control-file border"
               />
-              <br>
+              <br />
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
@@ -58,35 +100,42 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
-      $(document).ready(function() {
-        let imagesPreview = function(input, placeToInsertImagePreview) {
+      $(document).ready(function () {
+        let imagesPreview = function (input, placeToInsertImagePreview) {
           if (input.files) {
             let filesAmount = input.files.length;
             for (i = 0; i < filesAmount; i++) {
               let reader = new FileReader();
-              reader.onload = function(event) {
-                $($.parseHTML("<img>"))
-                  .attr("src", event.target.result)
+              reader.onload = function (event) {
+                $($.parseHTML('<img>'))
+                  .attr('src', event.target.result)
                   .appendTo(placeToInsertImagePreview);
               };
               reader.readAsDataURL(input.files[i]);
             }
           }
         };
-        $("#input-files").on("change", function() {
-          imagesPreview(this, "div.preview-images");
+        $('#input-files').on('change', function () {
+          imagesPreview(this, 'div.preview-images');
         });
 
-        $("button[type=submit]").attr('disabled','disabled');
+        $('button[type=submit]').attr('disabled', 'disabled');
 
         let title = document.getElementById('title');
         let file = document.getElementById('input-files');
         let portrait = document.getElementById('r1');
         let landscape = document.getElementById('r2');
+        let redtapeYes = document.getElementById('red1');
+        let redtapeNo = document.getElementById('red2');
 
-        $("form").change(function() {
-          if(title.value && file.value && (portrait.checked || landscape.checked)){
-            $("button[type=submit]").removeAttr('disabled');
+        $('form').change(function () {
+          if (
+            title.value &&
+            file.value &&
+            (portrait.checked || landscape.checked) &&
+            (redtapeYes.checked || redtapeNo.checked)
+          ) {
+            $('button[type=submit]').removeAttr('disabled');
           }
         });
       });
